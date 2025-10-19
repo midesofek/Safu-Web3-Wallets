@@ -1,0 +1,21 @@
+{
+  "name": "safu-web3-wallet-dapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bip39": "^3.1.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.3",
+    "ethereum-cryptography": "^3.2.0",
+    "ethers": "^5.8.0",
+    "fastify": "^5.6.1",
+    "mongoose": "^8.19.1"
+  }
+}
