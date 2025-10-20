@@ -70,15 +70,67 @@ async function getWalletTransactions(walletAddress, limit = 20) {
       return transactions.slice(0, limit);
     }
 
-    console.log(
-      "⚠️ No transactions found on Zerion, switching to Etherscan..."
-    );
+    console.log("⚠️ No transactions found on Zerion");
   } catch (err) {
     console.error("Zerion fetch failed:", err.message);
+  }
+}
+
+/**
+ * Fetch a wallet's portfolio data using Zerion API
+ * @param {string} walletAddress - The wallet address
+ * @returns {Promise<Object>} portfolio summary and asset breakdown
+ */
+async function getWalletPortfolio(walletAddress) {
+  if (!walletAddress) throw new Error("Wallet address is required");
+
+  const url = `https://api.zerion.io/v1/wallets/${walletAddress}/positions/?currency=usd`;
+  const headers = {
+    accept: "application/json",
+    authorization: `Basic ${process.env.ZERION_API_KEY}`, // "Basic <encoded-key>"
+  };
+
+  try {
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`Zerion API error (${res.status})`);
+
+    const data = await res.json();
+    const positions = data?.data || [];
+
+    // Extract key portfolio info
+    const assets = positions.map((p) => {
+      const attr = p.attributes;
+      const token = attr?.fungible_info || {};
+
+      return {
+        name: token?.name || attr?.name,
+        symbol: token?.symbol || attr?.symbol,
+        quantity: attr?.quantity?.float || 0,
+        price: attr?.price?.value || 0,
+        valueUSD: attr?.value || 0,
+        chain: attr?.chain,
+        category: attr?.type || "token",
+      };
+    });
+
+    // Compute portfolio totals
+    const totalValue = assets.reduce((sum, a) => sum + (a.valueUSD || 0), 0);
+
+    console.log(`✅ Portfolio fetched: ${assets.length} assets`);
+    return {
+      address: walletAddress,
+      totalValueUSD: totalValue,
+      assetCount: assets.length,
+      assets,
+    };
+  } catch (err) {
+    console.error("Zerion portfolio fetch failed:", err.message);
+    throw new Error("Failed to fetch portfolio from Zerion");
   }
 }
 
 module.exports = {
   getWalletETHBalance,
   getWalletTransactions,
+  getWalletPortfolio,
 };

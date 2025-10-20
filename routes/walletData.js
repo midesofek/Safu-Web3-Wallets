@@ -1,6 +1,7 @@
 const {
   getWalletTransactions,
   getWalletETHBalance,
+  getWalletPortfolio,
 } = require("../helpers/walletData");
 
 async function walletDataRoutes(app) {
@@ -19,6 +20,16 @@ async function walletDataRoutes(app) {
       const { address } = req.params;
       const txs = await getWalletTransactions(address);
       reply.send({ success: true, transactions: txs });
+    } catch (err) {
+      reply.status(400).send({ success: false, message: err.message });
+    }
+  });
+
+  app.get("/wallet/portfolio/:address", async (req, reply) => {
+    try {
+      const { address } = req.params;
+      const portfolio = await getWalletPortfolio(address);
+      reply.send({ success: true, portfolio });
     } catch (err) {
       reply.status(400).send({ success: false, message: err.message });
     }
