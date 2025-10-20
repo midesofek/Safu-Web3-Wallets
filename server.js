@@ -5,6 +5,7 @@ const walletRoutes = require("./routes/wallet");
 const authRoutes = require("./routes/auth");
 const walletDataRoutes = require("./routes/walletData");
 const sendRoutes = require("./routes/send");
+const transactionStatusRoutes = require("./routes/txnStatus");
 
 const app = Fastify({ logger: true });
 
@@ -12,6 +13,7 @@ app.register(walletRoutes);
 app.register(authRoutes);
 app.register(walletDataRoutes);
 app.register(sendRoutes);
+app.register(transactionStatusRoutes);
 
 const start = async () => {
   try {
