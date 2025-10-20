@@ -34,7 +34,11 @@ async function walletRoutes(app) {
     try {
       const { userId, password } = req.body;
       const result = await recoverWallet(userId, password);
-      reply.send({ success: true, mnemonic: result.mnemonic });
+      reply.send({
+        success: true,
+        mnemonic: result.mnemonic,
+        address: result.walletAddress,
+      });
     } catch (err) {
       reply.status(400).send({ success: false, message: err.message });
     }
