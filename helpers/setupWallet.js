@@ -49,7 +49,7 @@ const recoverWallet = async (userId, password) => {
   const mnemonic = decryptWithPassword(wallet.encryptedSeed, password);
   if (!mnemonic) throw new Error("Failed to decrypt. Wrong password?");
 
-  return { mnemonic };
+  return { mnemonic, walletAddress: wallet.address };
 };
 
 // const createWallet = async () => {
