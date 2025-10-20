@@ -1,6 +1,6 @@
-# SafuWallet — Building a Next-Gen Web3 Wallet (MVP)
+# SafuWallet: Self-Custodial Web3 Wallet
 
-Welcome to **SafuWallet**, my open-sourced build of a lightweight Web3 wallet focused on simplicity, security, and realworld use.
+**SafuWallet**, my open-sourced build of a lightweight Web3 wallet focused on simplicity, security, and realworld use.
 
 The idea is simple:
 
@@ -21,7 +21,7 @@ node server.js
 
 ---
 
-## 🚀 MVP Progress
+## Build Progress
 
 ☑️ **Create / Import Seed Phrase + Encrypted Local Storage**  
 ☑️ **Wallet Recovery** — Users can recover mnemonics using their password (decrypted locally)  
@@ -36,7 +36,7 @@ node server.js
 
 ---
 
-## TECH STACK
+## Tech Stack
 
 - **Backend:** Node.js / Fastify
 - **Mnemonic Generation:** BIP-39 Standard
